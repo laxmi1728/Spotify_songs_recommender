@@ -75,7 +75,7 @@ spotify_songs_recommender
 
 
 
-## ▶️ How to Run Locally
+  How to Run Locally
 
 1️⃣ Clone the repository
 
@@ -95,7 +95,7 @@ streamlit run application.py
 
 
 
-## Features of the Application
+Features of the Application
 
 ✔ Predicts song cluster based on audio features
 ✔ Maps clusters to dominant music genres
@@ -105,15 +105,15 @@ streamlit run application.py
 
 
 
-##  Application Preview
+  Application Preview
 
 Users can adjust song audio features and receive recommendations from the same cluster.
 
 
 
-##  Author
+ Author
 
-**Thota Laxmi Prasanna**
+Thota Laxmi Prasanna
 
 Machine Learning Project – Spotify Song Recommendation System
 
