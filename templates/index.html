@@ -1,1 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spotify AI Recommender</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+    <div class="logo">♫</div>
+    <div>
+        <h1>Spotify AI Recommender</h1>
+        <p>Machine Learning based Music Clustering System</p>
+    </div>
+</header>
+
+<section class="intro">
+    <h2>Discover Your Music Cluster</h2>
+    <p>Adjust the song audio features and let the trained K-Means model identify a cluster and recommend songs from it.</p>
+</section>
+
+{% if error %}
+<div class="error">{{ error }}</div>
+{% endif %}
+
+<form method="POST">
+<section class="panel">
+    <div class="heading">
+        <h2>🎵 Song Audio Features</h2>
+        <span>13 ML Features</span>
+    </div>
+
+    <div class="grid">
+
+    <div class="card">
+        <label>Track Popularity <b id="v1">{{ values.track_popularity }}</b></label>
+        <input type="range" name="track_popularity" min="0" max="100" value="{{ values.track_popularity }}" oninput="v1.textContent=this.value">
+        <small>Popularity score</small>
+    </div>
+
+    <div class="card">
+        <label>Danceability <b id="v2">{{ values.danceability }}</b></label>
+        <input type="range" name="danceability" min="0" max="1" step="0.01" value="{{ values.danceability }}" oninput="v2.textContent=this.value">
+        <small>Suitability for dancing</small>
+    </div>
+
+    <div class="card">
+        <label>Energy <b id="v3">{{ values.energy }}</b></label>
+        <input type="range" name="energy" min="0" max="1" step="0.01" value="{{ values.energy }}" oninput="v3.textContent=this.value">
+        <small>Intensity and activity</small>
+    </div>
+
+    <div class="card">
+        <label>Key <b id="v4">{{ values.key }}</b></label>
+        <input type="range" name="key" min="0" max="11" step="1" value="{{ values.key }}" oninput="v4.textContent=this.value">
+        <small>Pitch class</small>
+    </div>
+
+    <div class="card">
+        <label>Loudness <b id="v5">{{ values.loudness }}</b></label>
+        <input type="range" name="loudness" min="-60" max="0" step="0.01" value="{{ values.loudness }}" oninput="v5.textContent=this.value">
+        <small>Overall loudness in dB</small>
+    </div>
+
+    <div class="card">
+        <label>Mode <b id="v6">{{ values.mode }}</b></label>
+        <input type="range" name="mode" min="0" max="1" step="1" value="{{ values.mode }}" oninput="v6.textContent=this.value">
+        <small>Major or minor</small>
+    </div>
+
+    <div class="card">
+        <label>Speechiness <b id="v7">{{ values.speechiness }}</b></label>
+        <input type="range" name="speechiness" min="0" max="1" step="0.01" value="{{ values.speechiness }}" oninput="v7.textContent=this.value">
+        <small>Presence of spoken words</small>
+    </div>
+
+    <div class="card">
+        <label>Acousticness <b id="v8">{{ values.acousticness }}</b></label>
+        <input type="range" name="acousticness" min="0" max="1" step="0.01" value="{{ values.acousticness }}" oninput="v8.textContent=this.value">
+        <small>Acoustic confidence</small>
+    </div>
+
+    <div class="card">
+        <label>Instrumentalness <b id="v9">{{ values.instrumentalness }}</b></label>
+        <input type="range" name="instrumentalness" min="0" max="1" step="0.01" value="{{ values.instrumentalness }}" oninput="v9.textContent=this.value">
+        <small>Likelihood of no vocals</small>
+    </div>
+
+    <div class="card">
+        <label>Liveness <b id="v10">{{ values.liveness }}</b></label>
+        <input type="range" name="liveness" min="0" max="1" step="0.01" value="{{ values.liveness }}" oninput="v10.textContent=this.value">
+        <small>Live audience presence</small>
+    </div>
+
+    <div class="card">
+        <label>Valence <b id="v11">{{ values.valence }}</b></label>
+        <input type="range" name="valence" min="0" max="1" step="0.01" value="{{ values.valence }}" oninput="v11.textContent=this.value">
+        <small>Musical positivity</small>
+    </div>
+
+    <div class="card">
+        <label>Tempo <b id="v12">{{ values.tempo }}</b></label>
+        <input type="range" name="tempo" min="50" max="200" step="0.01" value="{{ values.tempo }}" oninput="v12.textContent=this.value">
+        <small>Beats per minute</small>
+    </div>
+
+    <div class="card">
+        <label>Duration (ms) <b id="v13">{{ values.duration_ms }}</b></label>
+        <input type="range" name="duration_ms" min="100000" max="400000" step="1000" value="{{ values.duration_ms }}" oninput="v13.textContent=this.value">
+        <small>Track duration</small>
+    </div>
+
+    </div>
+
+    <button class="predict" type="submit">Predict Genre & Recommend Songs</button>
+</section>
+</form>
+
+{% if genre %}
+<section class="panel result-panel">
+    <div class="result">
+        <small>PREDICTED GENRE</small>
+        <h2>{{ genre }}</h2>
+        <p>Cluster {{ prediction_id }}</p>
+    </div>
+
+    <div class="recommend-head">
+        <h2>Recommended Songs</h2>
+        <p>Songs selected from the predicted cluster</p>
+    </div>
+
+    <div class="songs">
+    {% for song in recommendations %}
+        <div class="song">
+            <div class="music">♫</div>
+            <div>
+                <h3>{{ song.track_name }}</h3>
+                <p>Artist: {{ song.track_artist }}</p>
+                <span>{{ song.playlist_genre }}</span>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<footer>Spotify Songs Recommender • K-Means Clustering • Flask</footer>
+</div>
+</body>
+</html>
 
