@@ -17,7 +17,7 @@ The application is deployed using **Render**.
 The Flask application is deployed on Render:
 
 🔗 **Live Demo:**  
-`YOUR_RENDER_URL`
+`https://spotify-songs-recommender.onrender.com/`
 
 ---
 
