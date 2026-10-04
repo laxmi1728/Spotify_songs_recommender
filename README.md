@@ -3,120 +3,190 @@
 ## 📌 Project Overview
 
 This project builds a **Spotify Song Recommendation System** using **Machine Learning (K-Means Clustering)**.
+
 The model groups songs based on their audio features and recommends similar songs from the same cluster.
 
-A **Streamlit web application** is used to allow users to interact with the model by adjusting song audio features and receiving recommended songs.
-
-
-
-##  Live Application
-
-You can access the deployed application here:
-
-🔗 https://spotifysongsrecommender-bfmggksruzisij2kzrjcwp.streamlit.app/
+A **Flask web application** is used to provide an interactive interface where users can adjust song audio features and receive recommendations based on the predicted music cluster.
 
 ---
 
-##  Machine Learning Approach
+## 🌐 Web Application
+
+The application is developed using **Flask** and provides an interactive web interface for song recommendation.
+
+The application allows users to:
+
+- Enter or adjust Spotify audio features
+- Predict the corresponding song cluster
+- Identify the dominant music genre associated with the cluster
+- Receive similar song recommendations
+
+---
+
+## 🤖 Machine Learning Approach
 
 The recommendation system uses **K-Means Clustering** to group songs with similar audio characteristics.
 
-### Audio Features Used
+The model was trained using Spotify song audio features.
 
-* Track Popularity
-* Danceability
-* Energy
-* Key
-* Loudness
-* Mode
-* Speechiness
-* Acousticness
-* Instrumentalness
-* Liveness
-* Valence
-* Tempo
-* Duration (ms)
+### 🎵 Audio Features Used
 
-Songs with similar features are grouped into clusters, and recommendations are generated from the same cluster.
+- Track Popularity
+- Danceability
+- Energy
+- Key
+- Loudness
+- Mode
+- Speechiness
+- Acousticness
+- Instrumentalness
+- Liveness
+- Valence
+- Tempo
+- Duration (ms)
 
+Songs with similar audio characteristics are grouped into clusters. When a user provides audio feature values, the trained K-Means model predicts the appropriate cluster and recommendations are generated from that cluster.
 
+---
 
-##  Technologies Used
+## 🎯 Cluster Categories
 
-* **Python**
-* **Pandas**
-* **NumPy**
-* **Scikit-Learn**
-* **Streamlit**
-* **GitHub**
-* **Streamlit Cloud**
+The trained model contains **5 clusters**, which are mapped to dominant music categories:
 
+| Cluster | Music Category |
+|--------:|----------------|
+| 0 | Latin Songs |
+| 1 | Rock Songs |
+| 2 | R&B / Hip-Hop Songs |
+| 3 | Rap Songs |
+| 4 | EDM Songs |
 
+> Note: The cluster represents similarity in audio features. The associated category represents the dominant genre observed within that cluster.
 
-##  Dataset
+---
+
+## 🛠️ Technologies Used
+
+- **Python**
+- **Flask**
+- **Pandas**
+- **NumPy**
+- **Scikit-Learn**
+- **HTML**
+- **CSS**
+- **GitHub**
+- **Gunicorn**
+
+---
+
+## 📊 Dataset
 
 The dataset contains Spotify song information including audio features and playlist genres.
-These features were used to train the clustering model.
 
+The following features were used for training and prediction:
 
+- Track Popularity
+- Danceability
+- Energy
+- Key
+- Loudness
+- Mode
+- Speechiness
+- Acousticness
+- Instrumentalness
+- Liveness
+- Valence
+- Tempo
+- Duration (ms)
 
-## Project Structure
+The processed dataset also contains the cluster labels generated using the K-Means model.
 
-```
+---
+
+## 📁 Project Structure
+
+```text
 spotify_songs_recommender
 │
-├── application.py           # Streamlit web application
-├── spotify_clustered.csv    # Dataset with cluster labels
-├── kmeans_model.pkl         # Trained K-Means model
-├── scaler.pkl               # Feature scaler
-├── requirements.txt         # Python dependencies
-└── README.md                # Project documentation
+├── app.py                  # Flask web application
+├── spotify_clustered.csv   # Dataset with cluster labels
+├── kmeans_model.pkl        # Trained K-Means model
+├── scaler.pkl              # Feature scaler
+├── requirements.txt        # Python dependencies
+├── README.md               # Project documentation
+│
+├── templates/
+│   └── index.html          # Flask HTML template
+│
+└── static/
+    └── style.css           # Application styling
 
-
-
-
-  How to Run Locally
-
-1️⃣ Clone the repository
-
-
+💻 How to Run Locally
+1️⃣ Clone the Repository
 git clone https://github.com/laxmi1728/spotify_songs_recommender.git
 
+2️⃣ Navigate to the Project Folder
+cd spotify_songs_recommender
 
-2️⃣ Install dependencies
-
-
+3️⃣ Install Dependencies
 pip install -r requirements.txt
 
+4️⃣ Run the Flask Application
+python app.py
 
-3️⃣ Run the Streamlit app
+5️⃣ Open the Application
+Open the following URL in your browser:
+http://127.0.0.1:5000
 
-streamlit run application.py
+✨ Features of the Application
+✔ Predicts the song cluster based on audio features
+✔ Maps clusters to dominant music categories
+✔ Recommends similar songs from the predicted cluster
+✔ Interactive audio feature controls
+✔ Uses the trained K-Means model
+✔ Uses the trained feature scaler
+✔ Flask-based web application
+✔ Responsive and user-friendly interface
+  
+🔄 Application Workflow
+User Input
+     ↓
+Spotify Audio Features
+     ↓
+Feature Scaling
+     ↓
+Trained K-Means Model
+     ↓
+Cluster Prediction
+     ↓
+Dominant Music Category
+     ↓
+Songs from Predicted Cluster
+     ↓
+Recommended Songs
 
+🧠 Model Files
+kmeans_model.pkl
+Contains the trained K-Means clustering model used to predict the cluster of a new song based on its audio features.
 
+scaler.pkl
+Contains the feature scaler used during model training. The same scaler is applied to user input before making predictions.
 
-Features of the Application
+spotify_clustered.csv
+Contains the processed Spotify dataset along with the cluster labels generated by the K-Means algorithm.
 
-✔ Predicts song cluster based on audio features
-✔ Maps clusters to dominant music genres
-✔ Recommends similar songs
-✔ Interactive sliders to modify audio features
-✔ Clean and responsive UI built with Streamlit
+🚀 Deployment
+The application is designed to be deployed as a Flask web application.
+For production deployment, Gunicorn can be used as the WSGI server.
+Example:
+gunicorn app:app
 
+📷 Application Preview
+Users can adjust Spotify song audio features through the web interface. The application predicts the corresponding cluster and displays the associated music category along with recommended songs.
 
-
-  Application Preview
-
-Users can adjust song audio features and receive recommendations from the same cluster.
-
-
-
- Author
-
+👩‍💻 Author
 Thota Laxmi Prasanna
-
 Machine Learning Project – Spotify Song Recommendation System
 
-  License
-
+📜 License
 This project is created for educational purposes.
