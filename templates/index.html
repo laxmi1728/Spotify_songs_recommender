@@ -702,21 +702,26 @@
     <!-- Prediction Result -->
 
     {% if prediction_id is not none %}
-
-    <div class="result">
-
-        <h2>Predicted Music Category</h2>
-
+    
+        <div class="result">
+    
+            <h2>Recommended Music Cluster</h2>
+    
         <div class="genre">
-            🎵 {{ genre }}
+            🎵 {{ genre }}-dominant Cluster
         </div>
-
+    
         <div class="cluster">
             K-Means Cluster: {{ prediction_id }}
         </div>
-
+    
+        <p class="result-description">
+            This cluster contains songs with similar audio characteristics.
+            {{ genre|capitalize }} is the dominant genre observed in this cluster.
+        </p>
+    
     </div>
-
+    
     {% endif %}
 
 
